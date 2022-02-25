@@ -7,4 +7,4 @@ This is a sample demo-code for the WACV 2019 paper: DIMAL: Deep Isometric Manifo
 <img src="Figures/S_Curve_FPS.png" width="500">
 
 ## Main Functions
-Start with ```FPS_Single_Display.py``` for a basic demo of the method on the S-Curve manifold. 
+Start with ```FPS_Single_Display.py``` for a basic demo of the method on the S-Curve manifold. Implemented with Pytorch. 
