@@ -31,7 +31,7 @@ def MDSNet(Data,Landmarks,NetParams,LearningParams):
     d = Variable(torch.FloatTensor(batch[:,2]))
     sumd = d.pow(2).sum()
 #==============================================================================
-#                   Define the model
+#                   Define the Architecture
 #==============================================================================
     #torch.manual_seed(666)#1000 was the typical
     HiddenLayer = NetParams['Size_HL']
