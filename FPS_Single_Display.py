@@ -19,7 +19,7 @@ from sklearn import manifold
 from sklearn import preprocessing
 from scipy import sparse, linalg
 from matplotlib import cm
-import MDSNet
+import MDSNet_3D
 import Functions_ManifoldLearning as FnManifold
 from sklearn import preprocessing, manifold, datasets
 import torch
@@ -55,7 +55,7 @@ Landmarks_FPS = {'indices':Landmarks['indices'][0:numIndices],
 #==============================================================================
 #                       RunMDS
 #==============================================================================
-Embedding_MDSNet,Net,train_err  = MDSNet.MDSNet(D,Landmarks_FPS,NetParams,LearningParams)
+Embedding_MDSNet,Net,train_err  = MDSNet_3D.MDSNet(D,Landmarks_FPS,NetParams,LearningParams)
 myFunctions.toc()
    
 #==============================================================================
@@ -66,20 +66,16 @@ fig = plt.figure()
 ax1 = fig.add_subplot(111)
 
 ax1.set_aspect('equal');
-
-
 ax1.scatter(Embedding_MDSNet[:,0],Embedding_MDSNet[:,1],
-           c = color,s=20,lw=0,alpha=1,cmap=cm.jet)
+           c = color,s=20,lw=0,alpha=1,cmap=cm.jet);
+
+ax1.scatter(Embedding_MDSNet[Landmarks_FPS['indices'],0],Embedding_MDSNet[Landmarks_FPS['indices'],1],
+           c = 'k',s=20,lw=0,alpha=1,cmap=cm.jet);
+
 ax1.set_title(str(numIndices),fontsize = 10)
 
-fig = plt.figure();
-plt.plot(np.log(train_err),label = str(numIndices))
-
     
-#filename = '/Users/gipadmin/Google Drive/MATLAB/MDS_Project/'+'SwissRollMScale'+str(numIndices)+'.mat'
-#sio.savemat(filename, {'D': D, 'colors': color,'Embedding_MDSNet':Embedding_MDSNet,
-#                                  'indices':Landmarks_FPS['indices']})
-    
+   
 
 
 

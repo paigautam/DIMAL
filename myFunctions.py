@@ -165,6 +165,41 @@ def plotPoints(D,color,pc,fig,dim):
        ax.set_aspect(1)
        ax.scatter(D[:,0],D[:,1],c = color,s=5,lw=0,alpha=1,cmap=cm.jet)
 
+###############################################################################
+#               Mixture Of Sinusoid Manifold Generator
+###############################################################################
+def imageSinusoiManifoldGenerator(ImSize,NumberOfSamples,omega1,omega2,mix):
+    
+    heightParam = 5;
+    
+    tx = np.linspace(0,2*np.pi,ImSize)
+    ty = np.linspace(0,heightParam,ImSize)
+    
+    X,_ = np.meshgrid(tx,tx)
+    _,Y = np.meshgrid(ty,ty)
+    Y = np.matlib.repmat(Y.reshape(1,(ImSize*ImSize)),NumberOfSamples,1)
+    
+    
+    sin1 = np.sin(omega1*X).reshape(1,(ImSize*ImSize))
+    sin2 = np.sin(omega2*X).reshape(1,(ImSize*ImSize))
+    
+    sin = np.concatenate((sin1,sin2),axis = 0)
+    Mixtures = np.random.uniform(mix[0],mix[1],[NumberOfSamples,2])
+    
+    Data = np.less(Y,heightParam/2+np.matmul(Mixtures,sin)).astype(float)
+    
+    colors = np.sqrt(np.sum(np.multiply(Mixtures,Mixtures),1))
+#    colors = Mixtures[:,1]
+    
+    y = np.ascontiguousarray(Data).view(np.dtype((np.void, Data.dtype.itemsize * Data.shape[1])))
+    _, idx = np.unique(y, return_index=True)
+
+    Data = Data[idx,:]
+    Mixtures = Mixtures[idx,:]
+    colors = colors[idx]
+    
+    return Data, Mixtures, colors
+#------------------------------------------------------------------------------
 
 
 
